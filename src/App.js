@@ -1,94 +1,72 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-// import { create, all } from 'mathjs';
 // import swal from 'sweetalert';
 
-// import userEvent from '@testing-library/user-event';
-
-// through try catch error after calculation
-
-// const config = { }
-// const math = create(all, config)
 
 const App = () => {
 
   const endsWithOperator = /[*+‑/]$/;
+  const endsWithEqualSign = /[=]$/;
+  const endsWithdot = /[.]$/;
 
   const [inpNum, setInpNum] = useState(0);
   const [output, setOutput] = useState('');
-  const [operator, setOperator] = useState('');
-  // const [expression, setExpression] = useState('');
-  const [answer, setAnswer] = useState('');
+
 
   const allClear = () => {
     setOutput('');
     setInpNum(0);
-    setOperator('')
   }
-
-  // const handleClick = (e) => {
-  //   if (inpNum === 0) {
-  //     setInpNum(e.target.value)
-  //     setOutput(e.target.value);
-  //   } else if (operator !== '') {
-  //     setOutput(prev => prev + operator);
-  //     setInpNum(e.target.value)
-  //   } else if (!endsWithOperator.test(inpNum)) {
-  //     // setOutput(prev => prev + e.target.value)
-  //     setInpNum(prev => prev + e.target.value);
-  //     setOutput(inpNum)
-  //   }
-  //   else {
-  //     setInpNum(prev => prev + e.target.value);
-  //     setOutput(prev => prev + e.target.value);
-  //   }
-  //   setOperator('');
-  // }
 
   const handleClick = (e) => {
-    if (answer && operator === '') {
+    if (inpNum === 0 && output === '') {
       setInpNum(e.target.value);
-      setAnswer('');
-    } else if (['+', '-', '*', '/'].includes(e.target.value)) {
-      setInpNum(0);
-      setOutput(prev => prev + operator)      
+      setOutput(e.target.value)
+    } 
+    else if (endsWithdot.test(output) && e.target.value === '.') {
+      setOutput(prev => prev.slice(0,-1) + e.target.value)
     }
-    // else if ( inpNum === 0 && e.target.value === '0') {
-    //   setTimeout(() => { 
-    //     setInpNum('SYNTAX ERROR!') 
-    //   }, 1000);
-    // } 
-    else if (inpNum === 0) {
-      setInpNum(e.target.value);
+    else if (['+', '-', '*', '/'].includes(e.target.value)) {
+      setInpNum('');
+      if (endsWithOperator.test(output)) {
+        setOutput(prev => prev.slice(0,-1) + e.target.value)
+      } 
+      else if (endsWithEqualSign.test(output) && ['+', '-', '*', '/'].includes(e.target.value)) {
+        setOutput(inpNum + e.target.value)
+        setInpNum('')
+      }
+      else {
+        setOutput(prev => prev + e.target.value)
+      }
+    } 
+    else if (endsWithEqualSign.test(output) && !['+', '-', '*', '/'].includes(e.target.value)) {
+      setInpNum(e.target.value)
+      setOutput(e.target.value)
     }
-    //  else if (inpNum.length > 15) {
-    //   setTimeout(() => { 
-    //     setInpNum('Exceeded your Maximum Limit!') 
-    //   }, 1000);
-    // } 
-    // else if (!endsWithOperator.test(inpNum)) {
-    //   setInpNum(prev => prev + operator + e.target.value);
-    //   setOutput(inpNum)
-    // } 
     else {
       setInpNum(prev => prev + e.target.value);
-      setOutput(inpNum)
+      setOutput(prev => prev + e.target.value)
     }
-    setOperator('') 
+  }
+  
+  
+  // if ( inpNum === 0 && e.target.value === '0') {
+  //   setTimeout(() => { 
+  //     setInpNum('SYNTAX ERROR!') 
+  //   }, 1000);
+  // } 
+  //  else if (inpNum.length > 15) {
+  //   setTimeout(() => { 
+  //     setInpNum('Exceeded your Maximum Limit!') 
+  //   }, 1000);
+  // } 
+  const evaluate = (e) => {
+    let answer = Math.round(eval(output) * 1000000000000) / 1000000000000;
+    setInpNum(answer);
+    setOutput(prev => prev + e.target.value);
   }
 
-  const getOperator = (e) => {
-    // if(answer) {
-    //   setInpNum(answer)
-    // }
-    setOperator(e.target.value);
-    // setExpression( e.target.value);
-  }
-
-  // const handleOutput = () => {
-  //   setOutput(inpNum);
-  // }
-
+  
   return (
 
     <div className="App">
@@ -106,19 +84,19 @@ const App = () => {
           <button onClick={handleClick} className="btn" id="seven" value="7">7</button>
           <button onClick={handleClick} className="btn" id="eight" value="8">8</button>
           <button onClick={handleClick} className="btn" id="nine" value="9">9</button>
-          <button onClick={getOperator} className="btn" id="multiply" value="*">x</button>
+          <button onClick={handleClick} className="btn" id="multiply" value="*">x</button>
           <button onClick={handleClick} className="btn" id="four" value="4">4</button>
           <button onClick={handleClick} className="btn" id="five" value="5">5</button>
           <button onClick={handleClick} className="btn" id="six" value="6">6</button>
-          <button onClick={getOperator} className="btn" id="divide" value="/">/</button>
+          <button onClick={handleClick} className="btn" id="divide" value="/">/</button>
           <button onClick={handleClick} className="btn" id="one" value="1">1</button>
           <button onClick={handleClick} className="btn" id="two" value="2">2</button>
           <button onClick={handleClick} className="btn" id="three" value="3">3</button>
-          <button onClick={getOperator} className="btn" id="subtract" value="-">‑</button>
+          <button onClick={handleClick} className="btn" id="subtract" value="-">‑</button>
           <button onClick={handleClick} className="btn" id="zero" value="0">0</button>
           <button onClick={handleClick} className="btn" id="decimal" value=".">.</button>
-          <button onClick={handleClick} className="btn" id="equals" value="=" >=</button>
-          <button onClick={getOperator} className="btn" id="add" value="+">+</button>
+          <button onClick={evaluate} className="btn" id="equals" value="=" >=</button>
+          <button onClick={handleClick} className="btn" id="add" value="+">+</button>
         </div>
 
       </div>
