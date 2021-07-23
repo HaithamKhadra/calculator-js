@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import swal from 'sweetalert';
 
 
@@ -9,7 +9,7 @@ const App = () => {
   const endsWithEqualSign = /[=]$/;
   const endsWithdot = /[.]$/;
 
-  const [inpNum, setInpNum] = useState(0);
+  const [inpNum, setInpNum] = useState('');
   const [output, setOutput] = useState('');
 
 
@@ -19,11 +19,7 @@ const App = () => {
   }
 
   const handleClick = (e) => {
-    if (inpNum === 0 && output === '') {
-      setInpNum(e.target.value);
-      setOutput(e.target.value)
-    } 
-    else if (endsWithdot.test(output) && e.target.value === '.') {
+    if (endsWithdot.test(output) && e.target.value === '.') {
       setOutput(prev => prev.slice(0,-1) + e.target.value)
     }
     else if (['+', '-', '*', '/'].includes(e.target.value)) {
@@ -66,7 +62,7 @@ const App = () => {
     setOutput(prev => prev + e.target.value);
   }
 
-  
+
   return (
 
     <div className="App">
@@ -74,7 +70,7 @@ const App = () => {
 
         <div className="display">
           <div id="output">{output}</div>
-          <div id="display" className="input">{inpNum}</div>
+          <div id="display" className="input">{inpNum || output ? inpNum : 0}</div>
         </div>
 
         <div id="calculator-buttons">
