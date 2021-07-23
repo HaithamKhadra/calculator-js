@@ -12,105 +12,116 @@ import React, { useEffect, useState } from 'react';
 
 const App = () => {
 
-  const endsWithEqualSign = /[=]$/;
   const endsWithOperator = /[*+‑/]$/;
-  const deci = /^\d*\.?\d+$/;
-  
-  const [inpChar, setinpChar] = useState(0);
-  const [Sign, setSign] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [outputDisplay, setoutputDisplay] = useState('');
 
-  const clearInp = () => {
-    setAnswer('');
-    setinpChar(0);
-    setoutputDisplay('');
+  const [inpNum, setInpNum] = useState(0);
+  const [output, setOutput] = useState('');
+  const [operator, setOperator] = useState('');
+  // const [expression, setExpression] = useState('');
+  const [answer, setAnswer] = useState('');
+
+  const allClear = () => {
+    setOutput('');
+    setInpNum(0);
+    setOperator('')
   }
+
+  // const handleClick = (e) => {
+  //   if (inpNum === 0) {
+  //     setInpNum(e.target.value)
+  //     setOutput(e.target.value);
+  //   } else if (operator !== '') {
+  //     setOutput(prev => prev + operator);
+  //     setInpNum(e.target.value)
+  //   } else if (!endsWithOperator.test(inpNum)) {
+  //     // setOutput(prev => prev + e.target.value)
+  //     setInpNum(prev => prev + e.target.value);
+  //     setOutput(inpNum)
+  //   }
+  //   else {
+  //     setInpNum(prev => prev + e.target.value);
+  //     setOutput(prev => prev + e.target.value);
+  //   }
+  //   setOperator('');
+  // }
 
   const handleClick = (e) => {
-    e.preventDefault();
-    if (answer && Sign === '') {
-      setinpChar(e.target.value);
+    if (answer && operator === '') {
+      setInpNum(e.target.value);
       setAnswer('');
-    } else if ( inpChar === 0 && e.target.value === '0') {
-      setTimeout(() => { 
-        setinpChar('SYNTAX ERROR!') 
-      }, 1000);
-    } else if (inpChar === 0) {
-      setinpChar(e.target.value);
-    } else if (inpChar.length > 15) {
-      setTimeout(() => { 
-        setinpChar('Exceeded your Maximum Limit!') 
-      }, 1000);
-    } else if (!endsWithOperator.test(inpChar)) {
-      setinpChar(prev => prev + Sign + e.target.value);
-      setoutputDisplay(inpChar)
-    } else {
-      setinpChar(prev => prev + e.target.value);
-      setoutputDisplay(inpChar)
+    } else if (['+', '-', '*', '/'].includes(e.target.value)) {
+      setInpNum(0);
+      setOutput(prev => prev + operator)      
     }
-    setSign('') 
+    // else if ( inpNum === 0 && e.target.value === '0') {
+    //   setTimeout(() => { 
+    //     setInpNum('SYNTAX ERROR!') 
+    //   }, 1000);
+    // } 
+    else if (inpNum === 0) {
+      setInpNum(e.target.value);
+    }
+    //  else if (inpNum.length > 15) {
+    //   setTimeout(() => { 
+    //     setInpNum('Exceeded your Maximum Limit!') 
+    //   }, 1000);
+    // } 
+    // else if (!endsWithOperator.test(inpNum)) {
+    //   setInpNum(prev => prev + operator + e.target.value);
+    //   setOutput(inpNum)
+    // } 
+    else {
+      setInpNum(prev => prev + e.target.value);
+      setOutput(inpNum)
+    }
+    setOperator('') 
   }
 
-  const getSign = (e) => {
-    if(answer) {
-      setinpChar(answer)
-    }
-    setSign(e.target.value);
-    // endsWithEqualSign.test(outputDisplay) && setinpChar(answer)
+  const getOperator = (e) => {
+    // if(answer) {
+    //   setInpNum(answer)
+    // }
+    setOperator(e.target.value);
+    // setExpression( e.target.value);
   }
 
-  const evalEquation = () => {
-    try {
-      // let x = Math.round(eval(inpChar) * 1000000000000) / 1000000000000;
-      let x = eval(inpChar);
-      setAnswer(x);
-      setoutputDisplay(inpChar + '=' + x);
-    } catch (error) {
-      // swal("Careful! Every number can have a maximum of one decimal");
-      setAnswer('');
-      setinpChar(0);
-      setoutputDisplay('0');
-    }
-  }
+  // const handleOutput = () => {
+  //   setOutput(inpNum);
+  // }
 
   return (
 
     <div className="App">
       <div id="calculator">
 
-        {/* <main><h1 id="title">JavaScript Calculator</h1></main> */}
-
         <div className="display">
-          <div id="output">{answer || answer === 0 ? outputDisplay : inpChar === 0 ? null : inpChar}&nbsp;&nbsp;</div>
-          <div id="display" className="input">{answer || answer === 0 ? answer : inpChar}&nbsp;&nbsp;</div>
+          <div id="output">{output}</div>
+          <div id="display" className="input">{inpNum}</div>
         </div>
 
         <div id="calculator-buttons">
-          <button className="btn" onClick={clearInp} id="clear" value="AC">AC</button>
-          <button className="btn" onClick={handleClick} id="openBracket" value="(">(</button>
-          <button className="btn" onClick={handleClick} id="closeBracket" value=")">)</button>
-          <button className="btn" onClick={handleClick} id="seven" value="7">7</button>
-          <button className="btn" onClick={handleClick} id="eight" value="8">8</button>
-          <button className="btn" onClick={handleClick} id="nine" value="9">9</button>
-          <button className="btn" onClick={(e) => getSign(e)} id="multiply" value="*">x</button>
-          <button className="btn" onClick={handleClick} id="four" value="4">4</button>
-          <button className="btn" onClick={handleClick} id="five" value="5">5</button>
-          <button className="btn" onClick={handleClick} id="six" value="6">6</button>
-          <button className="btn" onClick={(e) => getSign(e)} id="divide" value="/">/</button>
-          <button className="btn" onClick={handleClick} id="one" value="1">1</button>
-          <button className="btn" onClick={handleClick} id="two" value="2">2</button>
-          <button className="btn" onClick={handleClick} id="three" value="3">3</button>
-          <button className="btn" onClick={(e) => getSign(e)} id="subtract" value="-">‑</button>
-          <button className="btn" onClick={handleClick} id="zero" value="0">0</button>
-          <button className="btn" onClick={handleClick} id="decimal" value=".">.</button>
-          <button className="btn" onClick={evalEquation} id="equals" value="=" >=</button>
-          <button className="btn" onClick={(e) => getSign(e)} id="add" value="+">+</button>
+          <button onClick={allClear} className="btn" id="clear" value="AC">AC</button>
+          <button onClick={handleClick} className="btn" id="openBracket" value="(">(</button>
+          <button onClick={handleClick} className="btn" id="closeBracket" value=")">)</button>
+          <button onClick={handleClick} className="btn" id="seven" value="7">7</button>
+          <button onClick={handleClick} className="btn" id="eight" value="8">8</button>
+          <button onClick={handleClick} className="btn" id="nine" value="9">9</button>
+          <button onClick={getOperator} className="btn" id="multiply" value="*">x</button>
+          <button onClick={handleClick} className="btn" id="four" value="4">4</button>
+          <button onClick={handleClick} className="btn" id="five" value="5">5</button>
+          <button onClick={handleClick} className="btn" id="six" value="6">6</button>
+          <button onClick={getOperator} className="btn" id="divide" value="/">/</button>
+          <button onClick={handleClick} className="btn" id="one" value="1">1</button>
+          <button onClick={handleClick} className="btn" id="two" value="2">2</button>
+          <button onClick={handleClick} className="btn" id="three" value="3">3</button>
+          <button onClick={getOperator} className="btn" id="subtract" value="-">‑</button>
+          <button onClick={handleClick} className="btn" id="zero" value="0">0</button>
+          <button onClick={handleClick} className="btn" id="decimal" value=".">.</button>
+          <button onClick={handleClick} className="btn" id="equals" value="=" >=</button>
+          <button onClick={getOperator} className="btn" id="add" value="+">+</button>
         </div>
 
       </div>
-      {/* <p className='pre-name'>Designed and Coded by</p>
-      <a href='#' id='myName'>Haitham Khadra</a> */}
     </div>
   );
 }
