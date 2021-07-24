@@ -116,7 +116,7 @@ const endsWithOperator = /[*/+-]$/;
       </div>
       <div className='info'>
         <h1>Built by <span>Haitham Khadra</span></h1>
-        <a href='#'>source code</a>
+        <a rel="noreferrer" href='https://github.com/HaithamKhadra' target="_blank">Source Code</a>
       </div>
     </div>
   );
