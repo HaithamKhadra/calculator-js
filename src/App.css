@@ -1,57 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Zen dots', sans-serif;
+  line-height: 1.6;
+}
 
 .App {
-  padding-top: 2rem;
   height: 100vh;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  /* background: rgb(212,212,210);
-  background: radial-gradient(circle, rgba(212,212,210,1) 0%, rgba(81,81,81,1) 0%, rgba(104,104,104,1) 37%, rgba(80,80,80,1) 71%, rgba(106,106,106,1) 100%, rgba(28,28,28,1) 100%); */
-}
-
-#calculator {
-  width: 35% !important;
-  position: relative;
-  right: 8px;
-  font-family: 'Zen Dots', cursive;
-}
-
-#title {
-  text-align: center;
-  padding-left: 20px;
-  color: #D4D4D2;
+  padding-top: 1rem;
 }
 
 .display {
-  width: 100% !important;
-  height: 75px;
-  margin: 0;
-  padding: 0;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center; */
-  /* background: #1C1C1C; */
-  overflow: visible;
+  width: 100%;
+  height: 8rem;
+  background: #1C1C1C; 
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
 }
 
 #output, .input {
   height: 50%;
-  width: 100% !important;
+  width: 100%;
+  position: relative;
   display: flex;
   justify-content: flex-end;
-  flex-wrap: wrap;
-  flex-grow: inherit;
   align-items: center;
-  position: relative;
   padding: 5px 10px;
   background: #1C1C1C; 
   color: #D4D4D2;
-  font-size: 18px;
-  overflow: visible;
+  font-size: 1rem;
 }
 
 #output{
@@ -63,35 +46,29 @@
 }
 
 #calculator-buttons {
-  font-family: 'Zen Dots', cursive;
-  width: 100% !important;
-	height: fit-content;
-	/* grid-template-columns: 1fr 1fr 1fr 1fr; 
-	grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+  width: 100%;
+	height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 70px 70px 70px 70px 70px; 
+  grid-template-rows: 5rem 5rem 5rem 5rem 5rem; 
+  /* grid-template-rows: 70px 70px 70px 70px 70px;  */
   grid-template-areas: 
     "clear clear  openBracket closeBracket"
     "seven eight nine subtract"
     "four five six add"
     "one two three multiply"
     "zero decimal equals divide";
-  row-gap: 5px;
-  column-gap: 5px;
-  padding: 5px 10px;
-  margin-top: 15px;
   background: #1C1C1C; 
   border-radius: 0px 0px 10px 10px;
 }
 
-.btn, .btn:active {
-  cursor: pointer;
+#calculator-buttons > .btn, #calculator-buttons > .btn:active {
   border: 2px solid #1C1C1C;
   border-radius: 10px;
   outline: 0;
-  font-size: 18px;
+  font-size: 1.375rem;
   font-family: 'Zen Dots', cursive !important;
+  cursor: pointer;
 }
 
 #clear, #openBracket, #closeBracket {
@@ -111,18 +88,62 @@
   color: #D4D4D2;
 }
 
-.pre-name {
-  margin-top: 10px;
+.info {
+  text-align: center;
+}
+
+h1 {
+  margin-top: 1.275rem;
+  padding: 1.275rem;
+  text-align: center;
+  color: #505050;
+  font-size: 1.275rem;
+}
+
+span {
+  display: inline-block;
   color: #1C1C1C;
+  font-size: 1.875rem;
+  
 }
 
-#myName {
-  margin-top: 0px;
-  color: #D4D4D2;
+a {
+  text-decoration: none;
+  color: #FF9500;
+  background-color: #505050;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #505050, #1C1C1C);
+  box-shadow: 0px 0px 5px 2px #505050;
 }
 
-@media screen and (max-width: 668px) {
+
+@media screen and (min-width: 640px) {
+  
+  .App {
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 4rem;
+  }
+  
+  #calculator {
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px #505050;
+  }
+  
   #output, .input {
-    font-size: 14px;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  
+  .App {
+    width: 30%;
+  }
+  
+  #output, .input {
+    font-size: 1.375rem;
   }
 }

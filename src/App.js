@@ -5,9 +5,10 @@ import React, { useState } from 'react';
 
 const App = () => {
 
-  const endsWithOperator = /[*+‑/]$/;
+const endsWithOperator = /[*/+-]$/;
   const endsWithEqualSign = /[=]$/;
   const endsWithdot = /[.]$/;
+  const containsDot = /\d\.\d/;
 
   const [inpNum, setInpNum] = useState('');
   const [output, setOutput] = useState('');
@@ -15,47 +16,65 @@ const App = () => {
 
   const allClear = () => {
     setOutput('');
-    setInpNum(0);
+    setInpNum('');
   }
 
   const handleClick = (e) => {
+
+    // prevent the usage of consecutive and non-consecutive decimal points
     if (endsWithdot.test(output) && e.target.value === '.') {
-      setOutput(prev => prev.slice(0,-1) + e.target.value)
+      // setOutput(prev => prev.slice(0,-1) + e.target.value)
+      return null
     }
+
+    // prevent the usage of non-consecutive decimal points
+    else if (containsDot.test(inpNum) && e.target.value === '.') {
+      return null;
+    }
+
+    // prevent concatination of consecutive operators
     else if (['+', '-', '*', '/'].includes(e.target.value)) {
       setInpNum('');
+
       if (endsWithOperator.test(output)) {
         setOutput(prev => prev.slice(0,-1) + e.target.value)
       } 
+
+      /* this will allow the user to perform more calculations after evaluating a previous expression */
       else if (endsWithEqualSign.test(output) && ['+', '-', '*', '/'].includes(e.target.value)) {
         setOutput(inpNum + e.target.value)
         setInpNum('')
       }
+
       else {
         setOutput(prev => prev + e.target.value)
       }
     } 
+
+    /* this will allow the user to perform more calculations after evaluating a previous expression */
     else if (endsWithEqualSign.test(output) && !['+', '-', '*', '/'].includes(e.target.value)) {
       setInpNum(e.target.value)
       setOutput(e.target.value)
     }
+
+    else if (inpNum.length > 10) {
+      setTimeout(() => { 
+        setInpNum('10 digits only!') 
+      }, 1000);
+    } 
+    
+    // preventing user from start wit 0 first (last condition allow user to start with 0 if number is less than one)
+    else if (e.target.value === '0' && (inpNum === '' || inpNum === '0') && !endsWithOperator.test(output)) {
+      setInpNum(e.target.value)
+      setOutput(e.target.value)
+    }
+
     else {
       setInpNum(prev => prev + e.target.value);
       setOutput(prev => prev + e.target.value)
     }
   }
   
-  
-  // if ( inpNum === 0 && e.target.value === '0') {
-  //   setTimeout(() => { 
-  //     setInpNum('SYNTAX ERROR!') 
-  //   }, 1000);
-  // } 
-  //  else if (inpNum.length > 15) {
-  //   setTimeout(() => { 
-  //     setInpNum('Exceeded your Maximum Limit!') 
-  //   }, 1000);
-  // } 
   const evaluate = (e) => {
     let answer = Math.round(eval(output) * 1000000000000) / 1000000000000;
     setInpNum(answer);
@@ -94,7 +113,10 @@ const App = () => {
           <button onClick={evaluate} className="btn" id="equals" value="=" >=</button>
           <button onClick={handleClick} className="btn" id="add" value="+">+</button>
         </div>
-
+      </div>
+      <div className='info'>
+        <h1>Built by <span>Haitham Khadra</span></h1>
+        <a href='#'>source code</a>
       </div>
     </div>
   );
