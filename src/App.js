@@ -128,7 +128,7 @@ const App = () => {
       </div>
       <div className='info'>
         <h1>Built by <span>Haitham Khadra</span></h1>
-        <a rel="noreferrer" href='https://github.com/HaithamKhadra' target="_blank">Source Code</a>
+        <a rel="noreferrer" href='https://github.com/HaithamKhadra/calculator-js/tree/master' target="_blank">Source Code</a>
       </div>
     </div>
   );
