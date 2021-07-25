@@ -1,11 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-// import swal from 'sweetalert';
 
 
 const App = () => {
 
-const endsWithOperator = /[*/+-]$/;
+  const endsWithOperator = /[*/+-]$/;
   const endsWithEqualSign = /[=]$/;
   const endsWithdot = /[.]$/;
   const containsDot = /\d\.\d/;
@@ -23,7 +22,6 @@ const endsWithOperator = /[*/+-]$/;
 
     // prevent the usage of consecutive and non-consecutive decimal points
     if (endsWithdot.test(output) && e.target.value === '.') {
-      // setOutput(prev => prev.slice(0,-1) + e.target.value)
       return null
     }
 
@@ -37,6 +35,8 @@ const endsWithOperator = /[*/+-]$/;
       setInpNum('');
 
       if (endsWithOperator.test(output)) {
+
+        // did not choose return null to give user opportunity to change operator
         setOutput(prev => prev.slice(0,-1) + e.target.value)
       } 
 
@@ -46,6 +46,7 @@ const endsWithOperator = /[*/+-]$/;
         setInpNum('')
       }
 
+      // this will concatinate the newly selected to the output
       else {
         setOutput(prev => prev + e.target.value)
       }
@@ -76,9 +77,20 @@ const endsWithOperator = /[*/+-]$/;
   }
   
   const evaluate = (e) => {
-    let answer = Math.round(eval(output) * 1000000000000) / 1000000000000;
-    setInpNum(answer);
-    setOutput(prev => prev + e.target.value);
+    let answer;
+    try {
+      answer = Math.round(eval(output) * 1000000000000) / 1000000000000;
+
+      // the inpNum is going to display the answer while the ouptput displays the mathematical expression
+      setInpNum(answer);
+      setOutput(prev => prev + e.target.value);
+    } catch {
+      setOutput('SYNTAX ERROR!');
+      setTimeout(() => {
+        setInpNum('');
+        setOutput('');
+      }, 2000);
+    }
   }
 
 
