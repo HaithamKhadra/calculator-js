@@ -12,8 +12,14 @@ The visitors of this Web app are able to:
 
 ## Tech Stack
 
-**Client side:** HTML, CSS, JavaScript, React.js
+- ### Tools used on the **Client side:** 
+  - **HTML** 
+  - **CSS** - **SASS (SCSS)**
+  - **JavaScript**
 
+## Links
+
+- ### [live Demo](https://haithamkhadra.github.io/calculator-js)
 
 ## Screenshots
 
@@ -28,8 +34,3 @@ The visitors of this Web app are able to:
 ### Desktop design 
 
 ![Desktop design screenshot](https://raw.githubusercontent.com/HaithamKhadra/calculator-js/master/readmeImages/desktop.jpg)
-
-
-## Links
-
-### [live Demo](https://haithamkhadra.github.io/calculator-js)
