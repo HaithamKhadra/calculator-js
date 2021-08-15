@@ -15,7 +15,7 @@ The visitors of this Web app are able to:
 - ### Tools used on the **Client side:** 
   - **HTML** 
   - **CSS**
-  - **JavaScript**
+  - **JavaScript** - **React**
 
 ## Links
 
