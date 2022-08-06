@@ -12,25 +12,25 @@ The visitors of this Web app are able to:
 
 ## Tech Stack
 
-- ### Tools used on the **Client side:** 
-  - **HTML** 
+- ### Tools used on the **Client side:**
+  - **HTML**
   - **CSS**
   - **JavaScript** - **React**
 
 ## Links
 
-- ### [live Demo](https://haithamkhadra.github.io/calculator-js)
+- ### [live Demo](https://calculator-reactjs-haith.vercel.app/)
 
 ## Screenshots
 
-### Mobile design 
+### Mobile design
 
 ![Mobile design screenshot](https://raw.githubusercontent.com/HaithamKhadra/calculator-js/master/readmeImages/mobile.jpg)
 
-### Tablet design 
+### Tablet design
 
 ![Tablet design screenshot](https://raw.githubusercontent.com/HaithamKhadra/calculator-js/master/readmeImages/tablet.jpg)
 
-### Desktop design 
+### Desktop design
 
 ![Desktop design screenshot](https://raw.githubusercontent.com/HaithamKhadra/calculator-js/master/readmeImages/desktop.jpg)
